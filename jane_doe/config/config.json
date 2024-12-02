@@ -1,0 +1,14 @@
+{
+    "input_dir_path":"data/input",
+    "output_csv":"data_to_anonymize.csv",
+    "output_dir_path":"data/output",
+    "placeholder": "[ANONYME]",
+    "anonymization_patterns": [
+        "\\b([A-Z][a-z]+)\\s+([A-Z][a-z]+)\\b",
+        "\\b([A-Z][a-z]+)\\s+([A-Z]+)\\b",
+        "\\b([A-Z]+)\\s+([A-Z]+)\\b",
+        "\\b(M\\.|Mr\\.?|Dr\\.?|Mme\\.?|Mlle\\.?|Dre\\.?)\\s+([A-Z][a-z]+)\\b",
+        "\\b(M\\.|Mr\\.?|Dr\\.?|Mme\\.?|Mlle\\.?|Dre\\.?)\\s+([A-Z]+)\\b"
+    ]
+  }
+  
