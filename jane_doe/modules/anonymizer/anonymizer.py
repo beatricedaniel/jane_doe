@@ -1,14 +1,33 @@
+import os
 import re
+import csv 
 import json
 from utils.load_settings import load_settings
 from docx import Document
 
 class Anonymizer():
 
-    def read_settings(self, file_path):
-        settings = load_settings(file_path)
-        print(settings["anonymization_patterns"][0])
+    def get_patterns(self, file_path: str) -> list:
+        patterns = load_settings(file_path)
+        return patterns.get("anonymization_patterns", [])
 
+    def extract_text_from_docx(self, filepath):
+        """Extracts text from a .docx file, including both paragraphs and tables."""
+        document = Document(filepath)
+        text_parts = []
+
+        # Extract text from paragraphs
+        text_parts.extend(paragraph.text for paragraph in document.paragraphs)
+        
+        # Extract text from tables
+        for table in document.tables:
+            for row in table.rows:
+                for cell in row.cells:
+                    text_parts.append(cell.text)
+                    
+        print("\n".join(text_parts))       
+        # return "\n".join(text_parts)
+    
 
 # import os
 # import re

@@ -5,8 +5,10 @@ from utils.load_docx_files import load_docx_files
 
 def main():
     file_path = "jane_doe/config/config.json"
+    input_path = "jane_doe/data/input/R_EHPAD.docx"
     printer = Anonymizer()
-    printer.read_settings(file_path)
+    printer.get_patterns(file_path)
+    printer.extract_text_from_docx(input_path)
     # if len(sys.argv) < 2:
     #     print("Usage: python main.py <directory_path>")
     #     sys.exit(1)
