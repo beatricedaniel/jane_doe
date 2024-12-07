@@ -2,7 +2,7 @@ import os
 
 import json
 
-def load_docx_files(directory_path):
+def load_docx_files(directory_path: str) -> list:
     return [
         os.path.join(directory_path, f) 
         for f in os.listdir(directory_path) 

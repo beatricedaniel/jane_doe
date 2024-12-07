@@ -2,14 +2,72 @@ import os
 import re
 import csv 
 import json
-from utils.load_settings import load_settings
+from utils.load_docx_files import load_docx_files
 from docx import Document
 
 class Anonymizer():
 
-    def get_patterns(self, file_path: str) -> list:
-        patterns = load_settings(file_path)
-        return patterns.get("anonymization_patterns", [])
+    def get_patterns(settings: dict) -> list:
+        """Get list of patterns from the config dictionary.
+        Args:
+            settings: dictionary.
+        Returns:
+            list of patterns.
+        """
+        patterns = settings.get("anonymization_patterns", [])
+        try:
+            return patterns
+        except ValueError:
+            raise ValueError("Patterns must be a list")
+        
+    def get_sensitive_infos(patterns: list, input_dir_path: str, output_csv_path: str) -> list:
+        """Get list of words corresponding to the patterns.
+        Args:
+            patterns: list of regex patterns.
+            input_dir_path: directory where are the input documents.
+            output_csv_path: path of the csv file where are stored results.
+        Returns:
+            csv file with 
+                a acolumn for the sensitive infos extracted
+                a column for the location of each word.
+        """
+        docx_directory = load_docx_files(input_dir_path)
+        for docx_path in docx_directory:
+            document = Document(docx_path)
+            results = []
+            # Extract from paragraphs
+            for i, paragraph in enumerate(document.paragraphs):
+                for pattern in patterns:
+                    matches = pattern.findall(paragraph.text)
+                    for match in matches:
+                        results.append({
+                            "word": match,
+                            "location": f"Paragraph {i + 1}"
+                        })
+            # Extract from tables
+            for table_idx, table in enumerate(document.tables):
+                for row_idx, row in enumerate(table.rows):
+                    for col_idx, cell in enumerate(row.cells):
+                        for pattern in patterns:
+                            matches = pattern.findall(cell.text)
+                            for match in matches:
+                                results.append({
+                                    "word": match,
+                                    "location": f"Table {table_idx + 1}, Row {row_idx + 1}, Column {col_idx + 1}"
+                                })
+        return
+
+    # def get_patterns(self, file_path: str) -> list:
+    #     """Get the pztterns of the regex corresponding to sensitive informations.
+    #     Args:
+    #         file_path: path of the file containing the patterns.
+    #     Return:
+    #         list: the list of all the regex patterns
+    #     """
+    #     settings = load_settings(file_path)
+    #     patterns = settings.get("anonymization_patterns", [])
+    #     print(patterns)
+    #     return patterns
 
     def extract_text_from_docx(self, filepath):
         """Extracts text from a .docx file, including both paragraphs and tables."""

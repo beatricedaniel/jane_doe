@@ -1,6 +1,6 @@
 {
     "input_dir_path":"data/input",
-    "output_csv":"data_to_anonymize.csv",
+    "output_csv_path":"data/output/*data_to_anonymize.csv",
     "output_dir_path":"data/output",
     "placeholder": "[ANONYME]",
     "anonymization_patterns": [
