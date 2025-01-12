@@ -3,10 +3,13 @@ import sys
 from modules.anonymizer.anonymizer import Anonymizer
 from utils.load_settings import load_settings
 
+
 dev_config_file_path = "jane_doe/config/config.json"
+
 
 def main():
     extract_sensitive_infos()
+
 
 #def extract_sensitive_infos(patterns: list, input_dir_path: str, output_csv: str):
 def extract_sensitive_infos(config_file_path = dev_config_file_path):
@@ -25,3 +28,4 @@ def extract_sensitive_infos(config_file_path = dev_config_file_path):
 
 if __name__ == "__main__":
     main()
+    

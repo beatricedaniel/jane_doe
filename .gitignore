@@ -1,2 +1,4 @@
 jane_doe/data/input/*
 jane_doe/data/output/*
+jane_doe/modules/anonymizer/presidio_output/*
+jane_doe/modules/anonymizer/full_test/data_output/*
