@@ -1,11 +1,12 @@
 # DOCX Anonymizer
 
-A Python tool to anonymize `.docx` files by replacing sensitive information while preserving document formatting. It ensures all identifiable information like names, emails, phone numbers, and addresses are removed or replaced with placeholders.
+A Python tool to anonymize `.docx` files by replacing sensitive information. It ensures all identifiable information like names, emails, locations, are replaced with placeholders.
 
 ## Features
-- **Maintains Formatting**; Ensures all text formatting is preserved.
-- **Customizable Rules**; Use the `config.json` file to specify the placeholder replacing sensitive oinformation.
-- **Batch Processing**; Handles multiple `.docx` files.
+- **Custom patterns**; use config.json to configure the patterns of sensitive informations you want to anonymized. You can also conffigure patterns you want to exclude from this anonymization.
+- **NLP PII recognition**; this script uses Spacy NLP model to reconize true PII from informations identified by regex.
+- **Exclude acronyms**; As this script is designed for administration, input documents contains a lot of acronyms which are false positiv. You can load a .csv file with a list of acronyms to exclude.
+- **Monitor**;In addition to the anonymized documents, this script generate a .csv file with all expressions identified by regex and if they are truely recognize as PII by the NLP model.
 
 ## Prerequires
 - install pipx
